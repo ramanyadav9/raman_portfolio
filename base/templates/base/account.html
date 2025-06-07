@@ -1,0 +1,111 @@
+{% include 'base/main.html' %}
+{% load static %}
+{% block content %}
+    <style>
+    .main-container {
+        padding: 20px;
+        color: var(--mainText);
+    }
+
+    #user-info-box {
+        background-color: var(--secondaryColor);
+        text-align: center;
+        border: 1px solid var(--borderColor);
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    #user_pic {
+        height: 150px;
+        width: 150px;
+        border-radius: 50%;
+        border: 4px solid var(--themeDotBorder);
+        margin:0 auto;
+		object-fit: cover;
+    }
+
+    .card-body h2 {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+    }
+
+    .card-body p {
+        color: var(--secondaryText);
+    }
+
+    .btn-info {
+        background-color: var(--buttonColor);
+        border: none;
+        font-weight: 600;
+    }
+
+    .btn-info:hover {
+        filter: brightness(1.1);
+    }
+
+    .col-md-8 .card-body {
+        background-color: var(--secondaryColor);
+        border: 1px solid var(--borderColor);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    ul {
+        padding-left: 0;
+        list-style-type: none;
+    }
+
+    .comment-list {
+        margin-bottom: 15px;
+        padding: 10px;
+        background-color: var(--mainColor);
+        border-left: 4px solid var(--buttonColor);
+        border-radius: 6px;
+    }
+
+    .comment-list a {
+        color: var(--buttonColor);
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .comment-list a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+    <div class="main-container">
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-body" id="user-info-box">
+                    <img id="user_pic" src="{{ profile.profile_pic.url }}">
+                    <br>
+                    <h2>{{ profile }}</h2>
+                    <p>Email: {{ profile.email }}</p>
+                    <hr>
+                    <p>{{ profile.bio }}</p>
+                    <hr>
+                    <a class="btn btn-info btn-block" href="{% url 'update_profile' %}">Edit Profile</a>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card card-body">
+                    <h2>My Comments</h2>
+                    <ul>
+                        {% for comment in comments %}
+                            <li class = "comment-list">
+                                On <a href="{% url 'post' comment.post.slug %}">{{ comment.post.headline }}</a>:
+                                <br>
+                                {{ comment.body }}
+                            </li>
+                        {% empty %}
+                            <li class = "comment-list">No comments yet.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
