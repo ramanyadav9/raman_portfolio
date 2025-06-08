@@ -204,4 +204,4 @@ ACCOUNT_USERNAME_BLACKLIST = ['admin', 'account', 'portfolio', '']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CK_EDITOR_5_UPLOAD_FILE_VIEW_NAME = "custom_upload_file"
+CK_EDITOR_5_UPLOAD_FILE_VIEW_NAME = "uploads/"
