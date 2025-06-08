@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -165,9 +167,22 @@ MEDIA_URL = '/images/'
 STATICFILES_DIRS = [
     BASE_DIR /"static",  
 ]
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 STATIC_ROOT = BASE_DIR /"staticfiles"
+
+
+
+POSTGRES_LOCALLY = True
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
+    DEFAULT_FILES_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+else:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+    
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env('CLOUD_NAME'),
+    'API_KEY': env('CLOUD_API_KEY'),
+    'API_SECRET': env('CLOUD_API_SECRET')
+}
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -189,4 +204,4 @@ ACCOUNT_USERNAME_BLACKLIST = ['admin', 'account', 'portfolio', '']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CK_EDITOR_5_UPLOAD_FILE_VIEW_NAME = "uploads/"
+CK_EDITOR_5_UPLOAD_FILE_VIEW_NAME = "custom_upload_file"
